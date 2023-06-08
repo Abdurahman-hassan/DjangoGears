@@ -48,7 +48,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-[Linkedin](https://linkedin.com/in/abdelrahman.hassan.hamdy)
+[Linkedin](https://www.linkedin.com/in/abdelrahman-hassan-hamdy/)
 
 [mailto](mailto:abdelrahman.hassan.hamdy@gmail.com)
 
