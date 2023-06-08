@@ -48,10 +48,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-[Linkedin](https://www.linkedin.com/in/abdelrahman-hassan-hamdy/)
+<a href="mailto:abdelrahman.hassan.hamdy@gmail.com" target="_blank">Email</a>
 
-[mailto](mailto:abdelrahman.hassan.hamdy@gmail.com)
+Project Link: <a href="https://github.com/Abdurahman-hassan/DjangoGears" target="_blank">Project Link</a>
 
-Project Link: [
-DjangoGears Project](
-https://github.com/Abdurahman-hassan/DjangoGears)
+<a href="https://www.linkedin.com/in/abdelrahman-hassan-hamdy/" target="_blank">LinkedIn Profile</a>
