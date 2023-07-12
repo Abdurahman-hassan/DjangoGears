@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load blog_extras %}
+{#{% load blog_extras %} because we don't needd to use author_details filter  #}
 {% block content %}
     <h2>Blog Posts</h2>
     {% for post in posts %}
