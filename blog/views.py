@@ -38,3 +38,28 @@ def post_detail(request, slug):
     return render(
         request, "blog/post-detail.html", {"post": post, "comment_form": comment_form}
     )
+
+#logger.debug("Created user %s with email %s" % (username, email)) # Bad
+#logger.debug("Created user %s with email %s", username, email) # Better
+#logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email}) # Best
+#logger.log(logging.DEBUG, "Created user %s with email %s", username, email)
+#logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email})
+
+
+"""
+try:
+    # some code that might raise an exception
+    raise_exception()
+except ValueError:
+    logger.exception("An exception occured")
+    
+    
+try:
+    answer = 9 / 0
+    print(f"The answer is: {answer}")
+    raise_exception()
+except ZeroDivisionError:
+    logger.exception("A divide by zero exception occured")
+    
+    
+"""
