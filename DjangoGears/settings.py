@@ -29,7 +29,7 @@ class Dev(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = values.BooleanValue(True)
 
-    ALLOWED_HOSTS = values.ListValue(['localhost', '0.0.0.0', 'codio.io'])
+    ALLOWED_HOSTS = values.ListValue(['localhost', '0.0.0.0','127.0.0.1', 'codio.io'])
 
 
     # Application definition
@@ -143,7 +143,7 @@ class Dev(Configuration):
 
     LOGGING = {
         "version": 1,
-        "disable_existing_loggers": False,
+        "disable_existing_loggers": False, # disable any exeisting non root loggers
         "filters": {
             "require_debug_false": {
                 "()": "django.utils.log.RequireDebugFalse",
@@ -158,7 +158,7 @@ class Dev(Configuration):
         "handlers": {
             "console": {
                 "class": "logging.StreamHandler",
-                "stream": "ext://sys.stdout",
+                "stream": "ext://sys.stdout", # Default is stderr
                 "formatter": "verbose",
             },
             "mail_admins": {
