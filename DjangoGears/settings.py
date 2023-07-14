@@ -152,7 +152,7 @@ class Dev(Configuration):
         "formatters": {
             "verbose": {
                 "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-                "style": "{",
+                "style": "{", # "{message}") or "%s" for old style interpolation. "%s" is the default.
             },
         },
         "handlers": {
@@ -169,10 +169,10 @@ class Dev(Configuration):
             # "file": {"class": "logging.FileHandler", "filename": "/var/log/blango.log"},
         },
         "loggers": {
-            "django.request": {
+            "django.request": { # only when exceptions are unhandled does it get sent
                 "handlers": ["mail_admins"],
                 "level": "ERROR",
-                "propagate": True,
+                "propagate": True, # the stack traces also get logged to the console during development.
             },
         },
         "root": {
@@ -180,6 +180,17 @@ class Dev(Configuration):
             "level": "DEBUG",
         },
     }
+
+ADMINS = [("Ben Shaw", "ben@example.com"), ("Leo Lucio", "leo@example.com")] # The users who get code error notifications.
+DJANGO_ADMINS="Ben Shaw,ben@example.com;Leo Lucio,leo@example.com"
+
+# pip3 install "django[argon2]"
+PASSWORD_HASHERS = [
+      'django.contrib.auth.hashers.Argon2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+  ]
 
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
