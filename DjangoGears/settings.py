@@ -181,16 +181,70 @@ class Dev(Configuration):
         },
     }
 
-ADMINS = [("Ben Shaw", "ben@example.com"), ("Leo Lucio", "leo@example.com")] # The users who get code error notifications.
-DJANGO_ADMINS="Ben Shaw,ben@example.com;Leo Lucio,leo@example.com"
+    ADMINS = [("Ben Shaw", "ben@example.com"), ("Leo Lucio", "leo@example.com")] # The users who get code error notifications.
+    DJANGO_ADMINS="Ben Shaw,ben@example.com;Leo Lucio,leo@example.com"
 
-# pip3 install "django[argon2]"
-PASSWORD_HASHERS = [
-      'django.contrib.auth.hashers.Argon2PasswordHasher',
-      'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-      'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-      'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-  ]
+    # pip3 install "django[argon2]"
+    PASSWORD_HASHERS = [
+          'django.contrib.auth.hashers.Argon2PasswordHasher',
+          'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+          'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+          'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+      ]
+
+    # default cache backend in memory it's faster but if the app has been crashed the cache is lost
+    """ CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+            "LOCATION": "127.0.0.1:11211",
+        }
+    }
+    """
+    # default cache backend in database not in memory it's slower but if the app has been crashed the cache is not lost
+    # we need to add python mange.py createcachetable to create the table in the database
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "my_cache_table",
+        }
+    }
+
+    """
+    # file system cache backend
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+            "LOCATION": "/var/tmp/django_cache", # must exist (Django won’t create it)
+            }
+        }
+    """
+
+    """
+    # local memory cache backend
+    #  This can give you the speed advantages of in-memory caching without having to set up Memcached.
+    # However, since the cache is inside the Python process’ memory, 
+    # it can’t be shared across multiple Django instances.
+    
+    
+    # The LOCATION setting is not required, unless you have multiple local-memory caches. In which case, it should be unique for each one.
+    # This is actually the default backend that Django uses, and it’s good for development as you can test caching without setting up any external services.
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
+            }
+    """
+
+    """
+    # dummy cache backend
+    # This is a dummy cache that doesn’t cache anything at all.
+    # It’s used to disable caching, or in test suites.
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+            }
+        }
+    """
 
 
 class Prod(Dev):
