@@ -192,6 +192,7 @@ PASSWORD_HASHERS = [
       'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
   ]
 
+
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
     SECRET_KEY = values.SecretValue()
