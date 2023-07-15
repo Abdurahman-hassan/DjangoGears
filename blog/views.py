@@ -4,8 +4,10 @@ from blog.models import Post
 from django.shortcuts import redirect
 from blog.forms import CommentForm
 import logging
-
+# from django.views.decorators.cache import cache_page
+# from django.views.decorators.vary import vary_on_cookie
 # Add logger
+
 logger = logging.getLogger(__name__)
 
 def index(request):
@@ -14,6 +16,8 @@ def index(request):
     posts = Post.objects.filter(published_at__lte=timezone.now())
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
+
+
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
@@ -62,4 +66,36 @@ except ZeroDivisionError:
     logger.exception("A divide by zero exception occured")
     
     
+"""
+
+"""
+# write this function without a decorator
+def index(request):
+    from django.http import HttpResponse
+    return HttpResponse(str(request.user).encode("ascii"))
+    posts = Post.objects.filter(published_at__lte=timezone.now())
+    logger.debug("Got %d posts", len(posts))
+    return render(request, "blog/index.html", {"posts": posts})
+
+# open the normal browser and ingonito browser and compare the results
+
+# then add the decorator # @cache_page(60 * 15) # 15 minutes
+# then refresh the normal browser and ingonito browser and compare the results
+# i should see the same results in both browsers because the cache is in the server not in the browser
+"""
+
+"""
+# adding vary_on_cookie decorator in order to cache the page for each user
+# because i want to avoid caching the page for a user and then serving it to another user with the
+# same data for the first user
+
+# @cache_page(300)
+# @vary_on_cookie
+# def index(request):
+#     from django.http import HttpResponse
+#     return HttpResponse(str(request.user).encode("ascii"))
+#     posts = Post.objects.filter(published_at__lte=timezone.now())
+#     logger.debug("Got %d posts", len(posts))
+#     return render(request, "blog/index.html", {"posts": posts})
+
 """
