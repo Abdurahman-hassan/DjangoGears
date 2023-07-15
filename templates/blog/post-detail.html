@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-{% load blog_extras %}
+{% load blog_extras cache%}
+
+
+
+
 {% block content %}
+
 <h2>{{ post.title }}</h2>
 {% row %}
     <div class="col">
@@ -18,7 +23,10 @@
 {% include "blog/post-comments.html" %}
 {% row %}
     {% col %}
+        {#Add cache for a spacefec part its recent posts only not for comments or entire page#}
+        {% cache 3600 recent_posts post %}
         {% recent_posts post %}
+        {% endcache %}
     {% endcol %}
 {% endrow %}
 
