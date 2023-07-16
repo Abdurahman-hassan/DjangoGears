@@ -12,11 +12,10 @@ logger = logging.getLogger(__name__)
 
 def index(request):
   # {{ post.published_at|date:"M, d Y" }}, {{ value|lower }}
-
-    posts = Post.objects.filter(published_at__lte=timezone.now())
+    posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+    # select_related("author") is used to avoid the n+1 problem
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
-
 
 
 def post_detail(request, slug):
@@ -99,3 +98,7 @@ def index(request):
 #     return render(request, "blog/index.html", {"posts": posts})
 
 """
+
+def get_ip(request):
+  from django.http import HttpResponse
+  return HttpResponse(request.META['REMOTE_ADDR'])
