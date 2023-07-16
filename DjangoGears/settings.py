@@ -44,6 +44,7 @@ class Dev(Configuration):
         'blog',
         'crispy_forms',
         'crispy_bootstrap5',
+        "debug_toolbar",
     ]
 
     MIDDLEWARE = [
@@ -54,6 +55,8 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+
     ]
 
     ROOT_URLCONF = 'DjangoGears.urls'
@@ -245,7 +248,11 @@ class Dev(Configuration):
             }
         }
     """
-
+    INTERNAL_IPS = [
+        # ...
+        "127.0.0.1",
+        # ...
+    ]
 
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
