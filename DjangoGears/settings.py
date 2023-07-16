@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from configurations import Configuration, values
 import dj_database_url
+from debug_toolbar.panels.staticfiles import collector
+
 
 class Dev(Configuration):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,6 +50,7 @@ class Dev(Configuration):
     ]
 
     MIDDLEWARE = [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
         'django.middleware.common.CommonMiddleware',
@@ -55,8 +58,6 @@ class Dev(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        "debug_toolbar.middleware.DebugToolbarMiddleware",
-
     ]
 
     ROOT_URLCONF = 'DjangoGears.urls'
@@ -164,6 +165,12 @@ class Dev(Configuration):
                 "stream": "ext://sys.stdout", # Default is stderr
                 "formatter": "verbose",
             },
+            # 'djdt_log': { # this is the debug toolbar logger shows the custom logging panel
+            #     'level': 'DEBUG',
+            #     'class': 'debug_toolbar.panels.logging.ThreadTrackingHandler',
+            #     'collector': collector,
+            # },
+
             "mail_admins": {
                 "level": "ERROR",
                 "class": "django.utils.log.AdminEmailHandler",
