@@ -1,18 +1,33 @@
+import logging
+
+from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
-from blog.models import Post
-from django.shortcuts import redirect
+
 from blog.forms import CommentForm
-import logging
+from blog.models import Post
+
 # from django.views.decorators.cache import cache_page
 # from django.views.decorators.vary import vary_on_cookie
 # Add logger
 
 logger = logging.getLogger(__name__)
 
+
 def index(request):
-  # {{ post.published_at|date:"M, d Y" }}, {{ value|lower }}
-    posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
+    # {{ post.published_at|date:"M, d Y" }}, {{ value|lower }}
+    posts = (
+        Post.objects.filter(published_at__lte=timezone.now())
+        .select_related("author")
+        .only("title", "summary", "content", "author", "published_at", "slug")
+    )
+    # or
+    # posts = (
+    #     Post.objects.filter(published_at__lte=timezone.now())
+    #     .select_related("author")
+    #     .defer("created_at", "modified_at")
+    # )
+
     # select_related("author") is used to avoid the n+1 problem
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
@@ -21,7 +36,7 @@ def index(request):
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     logger.info(
-    "Created comment on Post %d for user %s", post.pk, request.user
+        "Created comment on Post %d for user %s", post.pk, request.user
     )
     if request.user.is_active:
         if request.method == "POST":
@@ -42,11 +57,12 @@ def post_detail(request, slug):
         request, "blog/post-detail.html", {"post": post, "comment_form": comment_form}
     )
 
-#logger.debug("Created user %s with email %s" % (username, email)) # Bad
-#logger.debug("Created user %s with email %s", username, email) # Better
-#logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email}) # Best
-#logger.log(logging.DEBUG, "Created user %s with email %s", username, email)
-#logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email})
+
+# logger.debug("Created user %s with email %s" % (username, email)) # Bad
+# logger.debug("Created user %s with email %s", username, email) # Better
+# logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email}) # Best
+# logger.log(logging.DEBUG, "Created user %s with email %s", username, email)
+# logger.debug("Created user %s with email %s", username, email, extra={"username": username, "email": email})
 
 
 """
@@ -99,6 +115,7 @@ def index(request):
 
 """
 
+
 def get_ip(request):
-  from django.http import HttpResponse
-  return HttpResponse(request.META['REMOTE_ADDR'])
+    from django.http import HttpResponse
+    return HttpResponse(request.META['REMOTE_ADDR'])
