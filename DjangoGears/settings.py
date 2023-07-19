@@ -43,6 +43,7 @@ class Dev(Configuration):
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        "djangoGears_auth",
         'blog',
         'crispy_forms',
         'crispy_bootstrap5',
@@ -260,6 +261,8 @@ class Dev(Configuration):
         "127.0.0.1",
         # ...
     ]
+
+    AUTH_USER_MODEL = "djangoGears_auth.User"
 
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
