@@ -1,7 +1,7 @@
-from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 
 # Create your models here.
@@ -38,3 +38,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class AuthorProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_profile"
+    )
+    bio = models.TextField()
+
+    def __str__(self):
+        return f"{self.__class__.__name__} object for {self.user}"
