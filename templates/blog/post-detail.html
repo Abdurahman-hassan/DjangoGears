@@ -30,5 +30,15 @@
     {% endcol %}
 {% endrow %}
 
+
+{% if post.author.user_profile %}
+    {% row %}
+        {% col %}
+            <h4>About the author</h4>
+            <p>{{ post.author.user_profile.bio }}</p>
+        {% endcol %}
+    {% endrow %}
+{% endif %}
+
 {% endblock %}
 
