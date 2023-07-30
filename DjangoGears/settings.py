@@ -263,6 +263,21 @@ class Dev(Configuration):
     ]
 
     AUTH_USER_MODEL = "djangoGears_auth.User"
+    # this is for django-registration-redux app to allow users to register
+    # registration_closed.html template will be shown instead of the registration form.
+    REGISTRATION_OPEN = True # by dafeult it's True
+    ACCOUNT_ACTIVATION_DAYS = 7
+    # use SMTP to send emails
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.mail.me.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = ''  # Your email
+    EMAIL_HOST_PASSWORD = ''  # Your app-specific password
+    DEFAULT_FROM_EMAIL = '' # shown email
+
+    # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 class Prod(Dev):
     DEBUG = values.BooleanValue(False)
