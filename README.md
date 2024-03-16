@@ -1,4 +1,4 @@
-# DjangoGears Study Project
+# DjangoGears Study Project (codio)
 
 DjangoGears Study Project is an open-source learning resource for mastering Django, a popular Python-based web framework, using the DjangoGears library. This project offers a comprehensive collection of modules covering all the key areas of Django, with detailed explanations and practical exercises.
 
